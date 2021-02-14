@@ -1,0 +1,21 @@
+{% extends 'videos_mp3/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="background">
+        <div class="title">
+            <p>Descargador de Videos </p>
+
+        </div>
+
+        <div class="content">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input type="submit" value="Descarga" class="btn btn-info btn-block">
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

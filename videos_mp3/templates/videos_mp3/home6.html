@@ -4,7 +4,7 @@
 {% block content %}
     <div class="row">
         <div class="col-md-12 mb-5">
-            <h1 class="display-2 text-center" style="text-align: center!important;">Descargador de Videos Twitter</h1>
+            <h1 class="display-2 text-center" style="text-align: center!important;">Descargador de Videos Facebook</h1>
         </div>
     </div>
     <div class="row">
@@ -20,7 +20,7 @@
     {% if title %}
         <div class="row">
             <div class="col-md-6 ml-auto mr-auto mt-5">
-                <h1 class="h3 text-center">{{ descripcion }}, Subido en {{ subido }}</h1>
+                <h1 class="h3 text-center">{{ title }}</h1>
             </div>
         </div>
         <div class="row">
@@ -30,15 +30,14 @@
 
             <div class="col-md-4 ml-auto mr-auto mt-5 pt-5" >
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center" ><p class="lead">Duración <i class="fa fa-clock-o"></i>: {{ duration }}</p></li>
-                    <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center" ><p class="lead">Likes<i class="fa fa-eye"></i>: {{ like }}</p></li>
+                    <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center" ><p class="lead">Likes: {{ like }}</p></li>
                     <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center"><p class="lead">Numero de Comentarios: {{ comentarios }}</li>
 
                    
             </div>
         </div>
         <div class="row">
-            <p class="h3 text-center mt-5 mb-5">Video Twitter</p>
+            <p class="h3 text-center mt-5 mb-5">Video Facebook</p>
             <div class="col-md-12">
                 <table class="table mt-5">
                     <thead class="thead-light">
@@ -52,7 +51,7 @@
                     {% for stream in streams %}
                         {% ifequal stream.extension "mp4" %}
                         <tr>
-                            <td>{{ stream.resolution }}</td>
+                            <td>{{ format }}</td>
                             <td>{{ stream.extension }}</td>
                             <td><a href="{{ stream.video_url }}" style="text-decoration: none;" download="{{ title }}.{{ extension }}" target="_blank" >Descarga <i class=" fa fa-download"></i></a></td>
                         </tr>

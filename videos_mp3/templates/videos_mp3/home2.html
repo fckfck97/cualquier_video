@@ -2,44 +2,64 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-12 mb-5">
-            <h1 class="display-2 text-center" style="text-align: center!important;">Descargador de Videos Youtube</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="content">
-            <form action="" method="post">
-                {% csrf_token %}
-                {{ form|crispy }}
-                <input type="submit" value="Download" class="btn btn-info btn-block">
-            </form>
-        </div>
-    </div>
-
-    {% if title %}
-        <div class="row">
-            <div class="col-md-6 ml-auto mr-auto mt-5">
-                <h1 class="h3 text-center">{{ title }}</h1>
+        <form action="" method="post">
+            <div class="form-row">
+              <div class="col-12 col-md-9 mb-2 mb-md-0">
+               {% csrf_token %}
+               {{ form|crispy }} 
+              </div>
+              <div class="col-12 col-md-3">
+                <button type="submit" value="Download" class="btn btn-block btn-lg btn-primary">Buscar</button>
+              </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 ml-auto mr-auto mt-5">
-                <img class="img-responsive" src="{{ thumb }}">
-            </div>
+        </form>
+{% endblock %}
 
-            <div class="col-md-4 ml-auto mr-auto mt-5 pt-5" >
-                <ul class="list-group list-group-flush"style="background-color: #a0463500">
-                    <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center" style="background-color: black;"><p class="lead">Duración <i class="fa fa-clock-o"></i>: {{ duration }}</p></li>
-                    <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center" style="background-color: #150571;"><p class="lead">Vistas <i class="fa fa-eye"></i>: {{ views }}</p></li>
-                    <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center" style="background-color: #221e3a;"><p class="lead">Me gusta <i class="fa fa-thumbs-up"></i>: {{ likes }} No me gusta <i class="fa fa-thumbs-up"></i>: {{ dislikes }}</p></li>
-                    <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center" style="background-color: transparent"><button class="btn btn-info mt-3" style="background-color: #4b55a0" data-toggle="collapse" data-target="#description">Descripción</button></li>
+{% block content2 %}
+{% if title %}
+<section class="showcase">
+    <div class="container-fluid p-0">
+      <div class="row no-gutters">
+
+        <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('{{ thumb }}');"></div>
+        <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+          <h2>{{ title }}</h2>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center"><p class="lead">Duración <i class="fa fa-clock-o"></i>: {{ duration }} Min</p></li>
+                    <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center" ><p class="lead">Vistas <i class="fa fa-eye"></i>: {{ views }}</p></li>
+                    <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center"><p class="lead">Me gusta <i class="fa fa-thumbs-up"></i>: {{ likes }} No me gusta <i class="fa fa-thumbs-up"></i>: {{ dislikes }}</p></li>
                 </ul>
-                <div id="description" class="collapse" >{{ description }}</div>
-            </div>
+                
         </div>
-        <div class="row">
-            <p class="h3 text-center mt-5 mb-5">Video</p>
+      </div>
+      <div class="row no-gutters">
+        <div class="col-lg-6 order-lg-2 my-auto showcase-text">
+            <h2> Audio</h2>>
+            <table class="table mt-5 mb-5">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Tamaño Archivo</th>
+                    <th scope="col">Extensión</th>
+                    <th scope="col">Descarga</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for stream in streams %}
+                    {% ifequal stream.resolution "Audio" %}
+                    <tr>
+                        <td>{{ stream.file_size }}</td>
+                        <td>{{ stream.extension }}</td>
+                        <td><a href="{{ stream.video_url }}" style="text-decoration: none;"
+                               download="{{ title }}.{{ extension }}" target="_blank">Descarga <i
+                                class=" fa fa-download"></i></a></td>
+                    </tr>
+                    {% endifequal %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+          <h2>Video</h2>
             <div class="col-md-12">
                 <table class="table mt-5">
                     <thead class="thead-light">
@@ -63,31 +83,9 @@
                     {% endfor %}
                     </tbody>
                 </table>
-
-                <p class="h3 text-center mt-5 mb-5">Audio</p>
-            <table class="table mt-5 mb-5">
-                <thead class="thead-light">
-                <tr>
-                    <th scope="col">Tamaño Archivo</th>
-                    <th scope="col">Extensión</th>
-                    <th scope="col">Descarga</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for stream in streams %}
-                    {% ifequal stream.resolution "Audio" %}
-                    <tr>
-                        <td>{{ stream.file_size }}</td>
-                        <td>{{ stream.extension }}</td>
-                        <td><a href="{{ stream.video_url }}" style="text-decoration: none;"
-                               download="{{ title }}.{{ extension }}" target="_blank">Descarga <i
-                                class=" fa fa-download"></i></a></td>
-                    </tr>
-                    {% endifequal %}
-                {% endfor %}
-                </tbody>
-            </table>
-            </div>
         </div>
-    {% endif %}
+        </div>
+      </div>
+  </section>
+  {% endif %}
 {% endblock %}

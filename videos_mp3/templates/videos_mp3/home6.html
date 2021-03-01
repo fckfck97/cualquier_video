@@ -1,21 +1,20 @@
 {% extends 'videos_mp3/base.html' %}
 {% load crispy_forms_tags %}
 
+<h2>Beta Facebook</h2>
 {% block content %}
-    <div class="row">
-        <div class="col-md-12 mb-5">
-            <h1 class="display-2 text-center" style="text-align: center!important;">Descargador de Videos Facebook</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="content">
-            <form action="" method="post">
-                {% csrf_token %}
-                {{ form|crispy }}
-                <input type="submit" value="Download" class="btn btn-info btn-block">
-            </form>
-        </div>
-    </div>
+        <form action="" method="post">
+            <div class="form-row">
+              <div class="col-12 col-md-9 mb-2 mb-md-0">
+               {% csrf_token %}
+               {{ form|crispy }} 
+              </div>
+              <div class="col-12 col-md-3">
+                <button type="submit" value="Download" class="btn btn-block btn-lg btn-primary">Buscar</button>
+              </div>
+            </div>
+        </form>
+{% endblock %}
 
     {% if title %}
         <div class="row">
@@ -62,4 +61,3 @@
             </div>
         </div>
     {% endif %}
-{% endblock %}

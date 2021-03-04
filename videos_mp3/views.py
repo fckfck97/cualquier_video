@@ -42,6 +42,22 @@ def vy(request,video_url,form):
 			resolution = 'Audio'
 			if m['height'] is not None:
 				resolution = f"{m['height']}x{m['width']}"
+				if resolution == "144x256" or resolution == "144x192":
+					resolution = "144p"
+				if resolution == "240x426" or resolution == "240x320":
+					resolution = "240p"
+				if resolution == "360x640" or resolution == "360x480":
+					resolution = "360p"
+				if resolution == "480x640" or resolution == "480x854":
+					resolution = "480p"
+				if resolution == "720x1280":
+					resolution = "720p HD"
+				if resolution == "1080x1920":
+					resolution = "1080p HD"
+				if resolution == "1440x2560":
+					resolution = "1440p 2K"
+				if resolution == "2160x3840":
+					resolution = "2160p 4K"
 			video_audio_streams.append({
 	                'resolution': resolution,
 	                'extension': m['ext'],
@@ -49,6 +65,7 @@ def vy(request,video_url,form):
 	                'video_url': m['url']
 	            })
 		video_audio_streams = video_audio_streams[::-1]
+
 		context = {
 	            'form': form,
 	            'title': meta['title'], 'streams': video_audio_streams,

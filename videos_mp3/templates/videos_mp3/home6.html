@@ -1,63 +1,62 @@
 {% extends 'videos_mp3/base.html' %}
 {% load crispy_forms_tags %}
-
 <h2>Beta Facebook</h2>
 {% block content %}
         <form action="" method="post">
-            <div class="form-row">
-              <div class="col-12 col-md-9 mb-2 mb-md-0">
-               {% csrf_token %}
-               {{ form|crispy }} 
-              </div>
-              <div class="col-12 col-md-3">
-                <button type="submit" value="Download" class="btn btn-block btn-lg btn-primary">Buscar</button>
-              </div>
-            </div>
+          {% csrf_token %}
+          {{ form|crispy }} 
+          <button class="btn bg-green-500 hover:bg-green-700 text-white py-2 px-7 ml-2 rounded-md" value="Download" type="submit">Aceptar</button>
         </form>
 {% endblock %}
 
-    {% if title %}
-        <div class="row">
-            <div class="col-md-6 ml-auto mr-auto mt-5">
-                <h1 class="h3 text-center">{{ title }}</h1>
-            </div>
+{% block content2 %}
+{% if title %}
+<main class="main flex justify-center items-center">
+      <div class="container mt-32 mb-32 lg:flex lg:flex-row items-center justify-around">
+        <div class="video-img px-5 lg:w-1/2 mb-6 flex justify-center">
+          <img src="{{ thumb }}" class="rounded-md" alt="">
         </div>
-        <div class="row">
-            <div class="col-md-4 ml-auto mr-auto mt-5">
-                <img class="img-responsive" src="{{ thumb }}">
+        <div class="video-data lg:w-1/2 px-5">
+          <div class="card p-5 bg-white rounded-md shadow-md">
+            <h2 class="v-data-title text-center mb-6">{{ descripcion }}, Subido en {{ subido }}</h2>
+            <div class="v-data-content flex flex-col items-center">
+              <div class="mb-4 flex flex-col items-center">
+                <span>{{ like }}</span>
+              </div>
+              <div class="mb-4 flex flex-col items-center">
+                <i data-feather="eye" class="mb-1"></i>
+                <span>{{ comentarios }}</span>
+              </div>
+              </div>
             </div>
+          </div>
+        </div>
+        
+      </div>
+    </main>
 
-            <div class="col-md-4 ml-auto mr-auto mt-5 pt-5" >
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center" ><p class="lead">Likes: {{ like }}</p></li>
-                    <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center"><p class="lead">Numero de Comentarios: {{ comentarios }}</li>
-
-                   
-            </div>
+  <div class="video-download text-center lg:w-1/2 px-5 mb-6">
+          <div class="card p-5 bg-white rounded-md shadow-md">
+            
+            <h2 class="d-option-title mb-6">Video Twitter</h2>
+            <table class="m-5 w-5/6 mx-auto text-gray-800">
+              <tr class="text-left border-b-2">
+                <th class="px-4 py-3">Resolución</th>
+                <th class="px-4 py-3">Extensión</th>
+                <th class="px-4 py-3">Descarga</th>
+              </tr>
+              {% for stream in streams %}
+                {% ifequal stream.extension "mp4" %}
+              <tr class="border-b text-left">
+                <td class="px-4 py-3">{{ stream.resolution }}</td>
+                <td class="px-4 py-3">{{ stream.extension }}</td>
+                <td><a href="{{ stream.video_url }}" style="text-decoration: none;" download="{{ title }}.{{ extension }}" target="_blank" >Descarga <i class=" fa fa-download"></i></a></td>
+              </tr>
+              {% endifequal %}
+            {% endfor %}
+            </table>
+          </div>
         </div>
-        <div class="row">
-            <p class="h3 text-center mt-5 mb-5">Video Facebook</p>
-            <div class="col-md-12">
-                <table class="table mt-5">
-                    <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Resolución</th>
-                        <th scope="col">Extensión</th>
-                        <th scope="col">Descarga</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for stream in streams %}
-                        {% ifequal stream.extension "mp4" %}
-                        <tr>
-                            <td>{{ format }}</td>
-                            <td>{{ stream.extension }}</td>
-                            <td><a href="{{ stream.video_url }}" style="text-decoration: none;" download="{{ title }}.{{ extension }}" target="_blank" >Descarga <i class=" fa fa-download"></i></a></td>
-                        </tr>
-                        {% endifequal %}
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        
     {% endif %}
+{% end block %}

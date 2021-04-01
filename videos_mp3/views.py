@@ -54,7 +54,7 @@ def vy(request,video_url,form):
 					resolution = "720p HD"
 				if resolution == "1080x1920":
 					resolution = "1080p HD"
-				if resolution == "1440x2560":
+				if resolution == "1440x2560" or resolution == "1152x2048":
 					resolution = "1440p 2K"
 				if resolution == "2160x3840":
 					resolution = "2160p 4K"
@@ -65,6 +65,7 @@ def vy(request,video_url,form):
 	                'video_url': m['url']
 	            })
 		video_audio_streams = video_audio_streams[::-1]
+		
 
 		context = {
 	            'form': form,

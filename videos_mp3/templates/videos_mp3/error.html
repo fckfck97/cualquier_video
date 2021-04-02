@@ -1,12 +1,10 @@
 {% extends 'videos_mp3/base.html' %}
 {% load crispy_forms_tags %}
+
 {% block content %}
-        <form action="" method="post">
-          {% csrf_token %}
-          {{ form|crispy }} 
-          <button class="btn bg-green-500 hover:bg-green-700 text-white py-2 px-7 ml-2 rounded-md" value="Download" type="submit">Aceptar</button>
-        </form>
+{% include 'videos_mp3/home.html' %}
 {% endblock %}
+
 {% block content2 %}
         <div class="row">
             <div class="col-md-6 ml-auto mr-auto mt-5">
